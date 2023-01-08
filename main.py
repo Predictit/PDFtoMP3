@@ -1,16 +1,15 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import pyttsx3, PyPDF3
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+pdfreader = PyPDF3.PdfFileReader(open('PythonTextPdfFile.pdf', 'rb'))
+speaker = pyttsx3.init()
 
+for page_num in range(pdfreader.numPages):
+    text = pdfreader.getPage(page_num).extractText()
+    clean_text = text.strip().replace('\n', ' ')
+    print(clean_text)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCssharm')
+speaker.save_to_file(clean_text, 'pythoninfo.mp3')
+speaker.runAndWait()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+speaker.stop()
